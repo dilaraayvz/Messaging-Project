@@ -14,19 +14,22 @@ import java.util.Date;
 @Setter
 @Entity
 @Table(name = "users")
-public class User {
-    @Column(name = "id")
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+public class User extends BaseEntity {
+    @SequenceGenerator(
+            name = "base_sequence_generator",
+            sequenceName = "customer_sequence",
+            allocationSize = 1
+    )
     @Column(name = "userName")
     private String userName;
     @Column(name = "eMail")
     private String eMail;
     @Column(name = "password")
     private String password;
-    @Column(name = "isActive")
-    private boolean isActive;
+    @Column(name = "name")
+    private String name;
+    @Column(name = "surname")
+    private String surname;
     @Column(name="lastSeen")
     private Date lastSeen;
 }
