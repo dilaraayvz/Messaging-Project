@@ -5,7 +5,11 @@ import com.messaging_project.userservice.services.abstracts.UserService;
 import com.messaging_project.userservice.services.dtos.request.UserCreate;
 import com.messaging_project.userservice.services.dtos.request.UserUpdate;
 import com.messaging_project.userservice.services.dtos.response.UserGet;
+import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Service;
 
+@Service
+@RequiredArgsConstructor
 public class UserServiceImpl implements UserService {
 
     private UserRepository userRepository;
