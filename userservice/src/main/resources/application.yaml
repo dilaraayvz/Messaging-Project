@@ -2,11 +2,11 @@ spring:
   application:
   name: userservice
 server:
-  port: 8888
+  port: 8081
 eureka:
   client:
-    registerWithEureka: false
-    fetchRegistry: false
+    registerWithEureka: true
+    fetchRegistry: true
     serviceUrl:
       defaultZone:https://localhost:8888/eureka/
 

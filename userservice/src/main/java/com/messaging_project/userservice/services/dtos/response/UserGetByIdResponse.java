@@ -13,6 +13,6 @@ public class UserGetByIdResponse {
     private int id;
     private String name;
     private String surname;
-    private String eMail;
+    private String email;
     private String userName;
 }

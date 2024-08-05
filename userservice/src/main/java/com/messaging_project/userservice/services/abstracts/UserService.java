@@ -11,7 +11,7 @@ import java.util.List;
 
 public interface UserService {
     UserAddResponse addUser(UserAddRequest userAddRequest);
-    UserUpdateResponse updateUser(int userId, UserUpdateRequest userUpdateRequest);
-    UserGetByIdResponse getUserById(int userId);
+    UserUpdateResponse updateUser(int id, UserUpdateRequest userUpdateRequest);
+    UserGetByIdResponse getUserById(int id);
     List<UserGetByIdResponse> getAllUsers();
 }

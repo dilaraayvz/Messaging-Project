@@ -10,7 +10,6 @@ public class Message {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-    private User reciever;
 
 
 }
