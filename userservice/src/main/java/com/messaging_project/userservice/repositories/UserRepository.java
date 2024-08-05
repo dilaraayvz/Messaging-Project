@@ -7,12 +7,10 @@ import java.util.Date;
 import java.util.Optional;
 
 public interface UserRepository extends JpaRepository<User, Integer> {
-    Optional<User> findByUsername(String userName);
     Optional<User> findByEmail(String eMail);
     Optional<User> findById(int id);
     Date findLastSeenById(int id);
     boolean isUserExist(String eMail);
     String findUserNameById(int id);
-
-
+    Optional<User> findByUserName(String userName);
 }

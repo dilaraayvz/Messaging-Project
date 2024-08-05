@@ -9,7 +9,7 @@ import lombok.Setter;
 @AllArgsConstructor
 @Getter
 @Setter
-public class UserUpdate {
+public class UserUpdateRequest {
     private String userName;
     private String eMail;
     private String name;

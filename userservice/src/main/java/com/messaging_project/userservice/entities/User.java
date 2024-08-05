@@ -20,11 +20,11 @@ public class User extends BaseEntity {
             sequenceName = "customer_sequence",
             allocationSize = 1
     )
-    @Column(name = "userName")
+    @Column(name = "userName", nullable = false, unique = true)
     private String userName;
-    @Column(name = "eMail")
+    @Column(name = "eMail", nullable = false, unique = true)
     private String eMail;
-    @Column(name = "password")
+    @Column(name = "password", nullable = false)
     private String password;
     @Column(name = "name")
     private String name;
@@ -32,4 +32,6 @@ public class User extends BaseEntity {
     private String surname;
     @Column(name="lastSeen")
     private Date lastSeen;
+
+
 }

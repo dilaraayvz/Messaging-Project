@@ -1,28 +1,22 @@
 package com.messaging_project.userservice.services.mappers;
-
 import com.messaging_project.userservice.entities.User;
-import com.messaging_project.userservice.services.dtos.request.UserCreate;
-import com.messaging_project.userservice.services.dtos.request.UserUpdate;
-import com.messaging_project.userservice.services.dtos.response.UserGet;
+import com.messaging_project.userservice.services.dtos.request.UserAddRequest;
+import com.messaging_project.userservice.services.dtos.request.UserUpdateRequest;
+import com.messaging_project.userservice.services.dtos.response.UserAddResponse;
+import com.messaging_project.userservice.services.dtos.response.UserGetByIdResponse;
+import com.messaging_project.userservice.services.dtos.response.UserUpdateResponse;
 import org.mapstruct.Mapper;
-import org.mapstruct.Mapping;
 import org.mapstruct.MappingTarget;
-import org.mapstruct.factory.Mappers;
 
-@Mapper
+@Mapper(componentModel = "spring")
 public interface UserMapper {
-    UserMapper INSTANCE= Mappers.getMapper(UserMapper.class);
-    //source kullanılmadı, hedef ve kaynaktaki field isimleri aynı
-    //expression: hesaplama gerekiyorsa kullanılır
-    @Mapping(target = "id", ignore = true)//ignore: id dönüşüm sırasında set edilmez çünkü veritabanı trafından otomatik olarak üretilir
-    @Mapping(target = "createdDate", expression = "java(java.time.LocalDateTime.now())")
-    @Mapping(target = "updatedDate", ignore = true)
-    @Mapping(target = "deletedDate", ignore = true)
-    @Mapping(target = "isActive", ignore = true)
-    User toUser(UserCreate userCreate);
+    User toEntity(UserAddRequest userAddRequest);
 
-    @Mapping(target = "updatedDate", expression = "java(java.time.LocalDateTime.now())")
-    void updateFromDTO(UserUpdate userUpdateDTO, @MappingTarget User user);
+    UserAddResponse toAddResponse(User user);
 
-    UserGet toUserResponseDTO(User user);
+    UserGetByIdResponse toGetByIdResponse(User user);
+
+    UserUpdateResponse toUpdateResponse(User user);
+
+    void updateEntity(@MappingTarget User user, UserUpdateRequest userUpdateRequest);
 }
