@@ -15,4 +15,5 @@ public class UserGetByIdResponse {
     private String surname;
     private String email;
     private String userName;
+
 }

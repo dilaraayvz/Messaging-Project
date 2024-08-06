@@ -11,4 +11,5 @@ import lombok.Setter;
 @Setter
 public class UserGetByIdRequest {
     private int id;
+
 }

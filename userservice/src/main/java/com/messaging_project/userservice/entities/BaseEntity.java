@@ -35,4 +35,5 @@ public class BaseEntity {
 
     @Column(name = "isaActive")
     private Boolean isaActive;
+
 }

@@ -33,5 +33,4 @@ public class User extends BaseEntity {
     @Column(name="lastSeen")
     private Date lastSeen;
 
-
 }

@@ -1,12 +1,9 @@
 spring:
   application:
-  name: userservice
-server:
-  port: 8081
-eureka:
-  client:
-    registerWithEureka: true
-    fetchRegistry: true
-    serviceUrl:
-      defaultZone:https://localhost:8888/eureka/
-
+    name: userservice
+  cloud:
+    config:
+      profile: local
+  config:
+    import: "configserver:${configUrl}"
+configUrl: http://localhost:8079/

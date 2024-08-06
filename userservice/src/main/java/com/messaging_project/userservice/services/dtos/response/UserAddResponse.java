@@ -14,4 +14,5 @@ public class UserAddResponse {
     private String password;
     private String name;
     private String surname;
+
 }
