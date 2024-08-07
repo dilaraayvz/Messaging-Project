@@ -13,5 +13,6 @@ public interface UserService {
     UserAddResponse addUser(UserAddRequest userAddRequest);
     UserUpdateResponse updateUser(int id, UserUpdateRequest userUpdateRequest);
     UserGetByIdResponse getUserById(int id);
+    void deleteUser(int id); // Silme işlemi için metod tanımı
     List<UserGetByIdResponse> getAllUsers();
 }

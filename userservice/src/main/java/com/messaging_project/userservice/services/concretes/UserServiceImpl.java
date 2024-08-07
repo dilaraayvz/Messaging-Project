@@ -38,7 +38,14 @@ public class UserServiceImpl implements UserService {
         // Entity to DTO conversion for response
         return userMapper.toAddResponse(savedUser);
     }
+    @Override
+    public void deleteUser(int id) {
+        // Kullanıcının var olup olmadığını kontrol et
+        userBusinessRules.checkIfUserExist(id);
 
+        // Kullanıcıyı veritabanından sil
+        userRepository.deleteById(id);
+    }
     @Override
     public UserUpdateResponse updateUser(int id, UserUpdateRequest userUpdateRequest) {
         // Check if user exists

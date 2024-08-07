@@ -1,20 +1,9 @@
 spring:
-  datasource:
-    url: jdbc:postgresql://localhost:5432/userdb
-    username: postgres
-    password: test
-  jpa:
-    properties:
-      hibernate:
-        dialect: org.hibernate.dialect.PostgreSQLDialect
-    hibernate:
-      ddl-auto: update
-
-server:
-  port: 8081
-eureka:
-  client:
-    serviceUrl:
-      defaultZone: http://localhost:8888/eureka/
-    registerWithEureka: true
-    fetchRegistry: true
+  application:
+    name: userservice
+  cloud:
+    config:
+      profile: local
+  config:
+    import: "configserver:${configUrl}"
+configUrl: http://localhost:8079/

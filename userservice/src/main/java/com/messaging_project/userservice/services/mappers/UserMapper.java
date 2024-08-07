@@ -8,6 +8,7 @@ import com.messaging_project.userservice.services.dtos.response.UserAddResponse;
 import com.messaging_project.userservice.services.dtos.response.UserGetByIdResponse;
 import com.messaging_project.userservice.services.dtos.response.UserUpdateResponse;
 import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
 import org.mapstruct.MappingTarget;
 import org.mapstruct.factory.Mappers;
 
@@ -16,12 +17,14 @@ public interface UserMapper {
     UserMapper INSTANCE = Mappers.getMapper(UserMapper.class);
 
     // DTO to Entity
+    @Mapping(target = "id", ignore = true) // ID'yi ignore et
     User toEntity(UserAddRequest request);
 
     // Entity to DTO for add response
     UserAddResponse toAddResponse(User user);
 
     // Update existing entity with DTO values
+    @Mapping(target = "id", ignore = true) // ID'yi ignore et
     void updateEntityFromRequest(UserUpdateRequest request, @MappingTarget User user);
 
     // Entity to UpdateResponse DTO

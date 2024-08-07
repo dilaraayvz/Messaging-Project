@@ -29,5 +29,21 @@ public class BaseEntity {
 
     @Column(name = "isaActive")
     private Boolean isaActive;
+    @PrePersist
+    protected void onCreate() {
+        createdDate = LocalDateTime.now();
+        isaActive = true;
+    }
+
+    @PreUpdate
+    protected void onUpdate() {
+        updatedDate = LocalDateTime.now();
+    }
+
+    @PreRemove
+    protected void onRemove() {
+        deletedDate = LocalDateTime.now();
+        isaActive = false;
+    }
 
 }
