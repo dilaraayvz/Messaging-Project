@@ -1,6 +1,5 @@
 package com.messaging_project.userservice.services.concretes;
 
-import com.messaging_project.commonpackage.configuration.utils.mappers.ModelMapperService;
 import com.messaging_project.userservice.entities.User;
 import com.messaging_project.userservice.repositories.UserRepository;
 import com.messaging_project.userservice.services.abstracts.UserService;
@@ -9,83 +8,75 @@ import com.messaging_project.userservice.services.dtos.request.UserUpdateRequest
 import com.messaging_project.userservice.services.dtos.response.UserAddResponse;
 import com.messaging_project.userservice.services.dtos.response.UserGetByIdResponse;
 import com.messaging_project.userservice.services.dtos.response.UserUpdateResponse;
+import com.messaging_project.userservice.services.mappers.UserMapper;
 import com.messaging_project.userservice.services.rules.UserBusinessRules;
 import lombok.AllArgsConstructor;
-import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-
-import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 @Service
 @AllArgsConstructor
-@RequiredArgsConstructor
-
 public class UserServiceImpl implements UserService {
 
-
     private final UserRepository userRepository;
-    private final ModelMapperService modelMapperService;
+    private final UserMapper userMapper;
     private final UserBusinessRules userBusinessRules;
+
 
     @Override
     public UserAddResponse addUser(UserAddRequest userAddRequest) {
+        // Check if email or username already exists
         userBusinessRules.checkIfEmailIsAlreadyExist(userAddRequest.getEmail());
         userBusinessRules.checkIfuserNameIsAlreadyExist(userAddRequest.getUserName());
 
-        User user = modelMapperService.forRequest().map(userAddRequest, User.class);
-        user.setCreatedDate(LocalDateTime.now());
-        user.setIsaActive(true);
+        // DTO to Entity conversion
+        User user = userMapper.toEntity(userAddRequest);
 
-        // User kaydı
+        // Save entity to database
         User savedUser = userRepository.save(user);
 
-        // User -> UserAddResponse dönüşümü
-        return modelMapperService.forResponse().map(savedUser, UserAddResponse.class);
-
+        // Entity to DTO conversion for response
+        return userMapper.toAddResponse(savedUser);
     }
 
     @Override
     public UserUpdateResponse updateUser(int id, UserUpdateRequest userUpdateRequest) {
-        // Kullanıcı var mı kontrolü
+        // Check if user exists
         userBusinessRules.checkIfUserExist(id);
 
-        // Kullanıcıyı veritabanından getir
-        User user = userRepository.findById(id)
+        // Find existing user by ID and update
+        User existingUser = userRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("User not found"));
 
-        // UserUpdateRequest -> User güncelleme
-        modelMapperService.forRequest().map(userUpdateRequest, user);
-        user.setUpdatedDate(LocalDateTime.now());
+        // Update entity with new values from request
+        userMapper.updateEntityFromRequest(userUpdateRequest, existingUser);
 
-        // Güncellenmiş kullanıcıyı kaydet
-        User updatedUser = userRepository.save(user);
+        // Save updated entity to database
+        User updatedUser = userRepository.save(existingUser);
 
-        // User -> UserUpdateResponse dönüşümü
-        return modelMapperService.forResponse().map(updatedUser, UserUpdateResponse.class);
+        // Convert to response DTO
+        return userMapper.toUpdateResponse(updatedUser);
     }
 
     @Override
-    public UserGetByIdResponse getUserById(int userId) {
-        // Kullanıcı var mı kontrolü
-        userBusinessRules.checkIfUserExist(userId);
-
-        // Kullanıcıyı veritabanından getir
-        User user = userRepository.findById(userId)
+    public UserGetByIdResponse getUserById(int id) {
+        // Check if user exists and retrieve user
+        User user = userRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("User not found"));
 
-        // User -> UserGetByIdResponse dönüşümü
-        return modelMapperService.forResponse().map(user, UserGetByIdResponse.class);
+        // Convert found user to DTO
+        return userMapper.toGetByIdResponse(user);
     }
 
     @Override
     public List<UserGetByIdResponse> getAllUsers() {
-        // Tüm kullanıcıları veritabanından al
+        // Retrieve all users
         List<User> users = userRepository.findAll();
 
-        // Her bir kullanıcıyı UserGetByIdResponse'e dönüştür
+        // Convert user list to response DTOs
         return users.stream()
-                .map(user -> modelMapperService.forResponse().map(user, UserGetByIdResponse.class))
+                .map(userMapper::toGetByIdResponse)
                 .collect(Collectors.toList());
     }
 }

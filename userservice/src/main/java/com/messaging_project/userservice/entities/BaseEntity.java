@@ -1,9 +1,6 @@
 package com.messaging_project.userservice.entities;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -14,13 +11,10 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @Getter
 @Setter
-
+@MappedSuperclass
 public class BaseEntity {
-    @Id // pk
-    @GeneratedValue(
-            strategy = GenerationType.SEQUENCE,
-            generator = "base_sequence_generator"
-    )
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private int id;
 

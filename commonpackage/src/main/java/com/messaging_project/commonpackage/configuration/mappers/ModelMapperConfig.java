@@ -12,8 +12,5 @@ public class ModelMapperConfig {
     public ModelMapper modelMapper() {
         return new ModelMapper();
     }
-    @Bean
-    public ModelMapperService getModelMapperService(ModelMapper mapper) {
-        return new ModelMapperManager(mapper);
-    }
+
 }

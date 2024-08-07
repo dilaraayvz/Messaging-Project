@@ -23,12 +23,12 @@ public class UserBusinessRules {
         }
     }
     public void checkIfEmailIsAlreadyExist(String eMail){
-        if(userRepository.isUserExist(eMail)) {
+        if(userRepository.existsByEmail(eMail)) {
             throw new RuntimeException("Email is already in use.");
         }
     }
     public void checkIfuserNameIsAlreadyExist(String userName){
-        if(userRepository.isUserExist(userName)) {
+        if(userRepository.existsByUserName(userName)) {
             throw new RuntimeException("Username is already in use.");
         }
     }

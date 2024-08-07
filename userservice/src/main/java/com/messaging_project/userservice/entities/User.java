@@ -15,11 +15,7 @@ import java.util.Date;
 @Entity
 @Table(name = "users")
 public class User extends BaseEntity {
-    @SequenceGenerator(
-            name = "base_sequence_generator",
-            sequenceName = "customer_sequence",
-            allocationSize = 1
-    )
+
     @Column(name = "userName", nullable = false, unique = true)
     private String userName;
     @Column(name = "eMail", nullable = false, unique = true)
