@@ -2,7 +2,6 @@ package com.messaging_project.userservice.services.rules;
 
 import com.messaging_project.userservice.repositories.UserRepository;
 import lombok.Getter;
-import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 import org.springframework.stereotype.Service;
 
