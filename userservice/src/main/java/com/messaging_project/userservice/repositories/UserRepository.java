@@ -1,10 +1,7 @@
 package com.messaging_project.userservice.repositories;
 
 import com.messaging_project.userservice.entities.User;
-import lombok.AllArgsConstructor;
-import lombok.NoArgsConstructor;
 import org.springframework.data.jpa.repository.JpaRepository;
-
 import java.util.Date;
 import java.util.Optional;
 
