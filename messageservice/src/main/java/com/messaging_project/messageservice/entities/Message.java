@@ -12,7 +12,7 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 public class Message {
 
-    public Message(String senderId, String receiverId, String content) {
+    public Message(int senderId, int receiverId, String content) {
         this.senderId = senderId;
         this.receiverId = receiverId;
         this.content = content;
@@ -23,10 +23,10 @@ public class Message {
     private int id;
 
     @Column(nullable = false)
-    private String senderId;
+    private int senderId;
 
     @Column(nullable = false)
-    private String receiverId;
+    private int receiverId;
 
     @Column(nullable = false)
     private String content;

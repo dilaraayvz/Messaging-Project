@@ -14,23 +14,27 @@ import java.util.List;
 @AllArgsConstructor
 public class MessageServiceImpl implements MessageService {
     private final MessageRepository messageRepository;
-
-
-    public Message sendMessage(String senderId, String receiverId, String content) {
+    @Override
+    public Message sendMessage(int senderId, int receiverId, String content) {
         Message message = new Message(senderId, receiverId, content);
         message.setSentAt(LocalDateTime.now());
         return messageRepository.save(message);
     }
-
-    public List<Message> getConversation(String senderId, String receiverId) {
+    @Override
+    public List<Message> getConversation(int senderId, int receiverId) {
         return messageRepository.findBySenderIdAndReceiverId(senderId, receiverId);
     }
-
-    public List<Message> getSentMessages(String senderId) {
+    @Override
+    public List<Message> getSentMessages(int senderId) {
         return messageRepository.findBySenderId(senderId);
     }
-
-    public List<Message> getReceivedMessages(String receiverId) {
+    @Override
+    public List<Message> getReceivedMessages(int receiverId) {
         return messageRepository.findByReceiverId(receiverId);
+    }
+
+    @Override
+    public Message getMessageById(int id) {
+        return messageRepository.findById(id);
     }
 }

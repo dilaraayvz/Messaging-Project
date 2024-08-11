@@ -1,6 +1,6 @@
 package com.messaging_app.authserver.core.configuration;
 
-import com.messaging_project.userservice.services.abstracts.UserService;
+
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -22,16 +22,18 @@ public class SecurityConfiguration {
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
-
-  /*  @Bean
+    @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+
         http
-                //.authorizeHttpRequests((req)-> req.anyRequest().authenticated())
-                .csrf(AbstractHttpConfigurer::disable)  // Cross-Site Request Forgery
-                .httpBasic(AbstractHttpConfigurer::disable);
+                .httpBasic(httpBasicConfigurer -> httpBasicConfigurer.disable())
+                .authorizeHttpRequests(authorizeRequests ->
+                        authorizeRequests.anyRequest().authenticated()
+                )
+                .csrf(csrfConfigurer -> csrfConfigurer.disable());
+
         return http.build();
     }
-*/
     @Bean
     public AuthenticationProvider authenticationProvider(){
         DaoAuthenticationProvider daoAuthenticationProvider = new DaoAuthenticationProvider();

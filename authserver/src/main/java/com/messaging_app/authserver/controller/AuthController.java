@@ -19,12 +19,14 @@ public class AuthController {
     @PostMapping("register")
     public void register(@RequestBody RegisterRequest request)
     {
+
         authService.register(request);
     }
 
     @PostMapping("login")
     public void login(@RequestBody LoginRequest request)
     {
+
         authService.login(request);
     }
 }
