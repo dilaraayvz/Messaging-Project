@@ -5,7 +5,7 @@ import org.mapstruct.Mapping;
 import org.mapstruct.factory.Mappers;
 import com.messaging_app.authserver.entities.User;
 import com.messaging_app.authserver.services.dtos.requests.LoginRequest;
-@Mapper
+@Mapper(componentModel = "spring")
 public interface UserMapper {
     UserMapper INSTANCE = Mappers.getMapper(UserMapper.class);
     @Mapping(target = "password", ignore = true)

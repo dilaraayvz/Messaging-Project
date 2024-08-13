@@ -18,19 +18,27 @@ import org.springframework.security.web.SecurityFilterChain;
 @RequiredArgsConstructor
 public class SecurityConfiguration {
     private final UserDetailsService userDetailsService;
+    private static final String[] WHITE_LIST={
+            "/api/v1/auth/**",
+            "/swagger-ui/**",
+            "/v2/api-docs",
+            "/v3/api-docs",
+            "/v3/api-docs/**",
+    };
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-
         http
-                .httpBasic(httpBasicConfigurer -> httpBasicConfigurer.disable())
+                .csrf(csrfConfigurer -> csrfConfigurer.disable()) // CSRF korumasını devre dışı bırakır
                 .authorizeHttpRequests(authorizeRequests ->
-                        authorizeRequests.anyRequest().authenticated()
+                        authorizeRequests
+                                .requestMatchers(WHITE_LIST).permitAll() // WHITE_LIST içinde tanımlanan yollar için izin veriliyor
+                                //.anyRequest().authenticated() // Diğer tüm istekler için kimlik doğrulaması gerektir
                 )
-                .csrf(csrfConfigurer -> csrfConfigurer.disable());
+                .httpBasic(httpBasicConfigurer -> httpBasicConfigurer.disable()); // HTTP Basic Authentication'ı devre dışı bırakır
 
         return http.build();
     }
