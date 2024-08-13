@@ -3,6 +3,7 @@ package com.messaging_app.authserver.core.configuration;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.AuthenticationProvider;
@@ -17,6 +18,7 @@ import com.messaging.security.BaseJwtFilter;
 
 @Configuration
 @RequiredArgsConstructor
+@ComponentScan()
 public class SecurityConfiguration {
     private final BaseJwtFilter baseJwtFilter;
 

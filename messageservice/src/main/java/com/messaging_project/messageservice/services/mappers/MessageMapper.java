@@ -5,7 +5,7 @@ import com.messaging_project.messageservice.services.dtos.requests.MessageReques
 import com.messaging_project.messageservice.services.dtos.responses.MessageResponse;
 import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;
-@Mapper
+@Mapper(componentModel = "spring")
 public interface MessageMapper {
     MessageMapper INSTANCE = Mappers.getMapper(MessageMapper.class);
 

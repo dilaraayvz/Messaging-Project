@@ -19,7 +19,6 @@ public class Message {
     @Column(nullable = false)
     private int senderId;
 
-    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "receiver_id", nullable = false)
     private int receiverId;
 

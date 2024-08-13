@@ -9,6 +9,7 @@ import com.messaging_project.messageservice.services.dtos.requests.MessageReques
 import com.messaging_project.messageservice.services.dtos.responses.MessageResponse;
 import com.messaging_project.messageservice.services.mappers.MessageMapper;
 import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
