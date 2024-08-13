@@ -11,8 +11,8 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 public class MessageResponse {
     private Long id;
-    private String senderId;
-    private String receiverId;
+    private int senderId;
+    private int receiverId;
     private String content;
     private LocalDateTime sentAt;
 }

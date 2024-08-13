@@ -83,6 +83,12 @@
 			<version>1.5.5.Final</version>
 			<scope>compile</scope>
 		</dependency>
+		<dependency>
+			<groupId>com.messaging-app</groupId>
+			<artifactId>authserver</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+			<scope>compile</scope>
+		</dependency>
 	</dependencies>
 	<dependencyManagement>
 		<dependencies>

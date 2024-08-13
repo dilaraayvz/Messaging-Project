@@ -12,12 +12,6 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 public class Message {
 
-    public Message(int senderId, int receiverId, String content) {
-        this.senderId = senderId;
-        this.receiverId = receiverId;
-        this.content = content;
-    }
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
@@ -25,7 +19,8 @@ public class Message {
     @Column(nullable = false)
     private int senderId;
 
-    @Column(nullable = false)
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "receiver_id", nullable = false)
     private int receiverId;
 
     @Column(nullable = false)
@@ -33,5 +28,4 @@ public class Message {
 
     @Column(nullable = false)
     private LocalDateTime sentAt;
-
 }

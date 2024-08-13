@@ -13,10 +13,13 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import com.messaging.security.BaseJwtFilter;
 
 @Configuration
 @RequiredArgsConstructor
 public class SecurityConfiguration {
+    private final BaseJwtFilter baseJwtFilter;
+
     private final UserDetailsService userDetailsService;
     private static final String[] WHITE_LIST={
             "/api/v1/auth/**",

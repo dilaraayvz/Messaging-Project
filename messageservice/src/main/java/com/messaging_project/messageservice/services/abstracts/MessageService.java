@@ -1,14 +1,17 @@
 package com.messaging_project.messageservice.services.abstracts;
 
 import com.messaging_project.messageservice.entities.Message;
+import com.messaging_project.messageservice.services.dtos.requests.MessageRequest;
+import com.messaging_project.messageservice.services.dtos.responses.MessageResponse;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface MessageService {
-     Message sendMessage(int senderId, int receiverId, String content);
-    List<Message> getConversation(int senderId, int receiverId);
-    List<Message> getSentMessages(int senderId);
-    List<Message> getReceivedMessages(int receiverId);
+    MessageResponse sendMessage(MessageRequest messageRequest);
+    List<MessageResponse> getConversation(int senderId, int receiverId);
+    List<MessageResponse> getSentMessages(int senderId);
+    List<MessageResponse> getReceivedMessages(int receiverId);
 
-    Message getMessageById(int id);
+    Optional<MessageResponse> getMessageById(int id);
 }

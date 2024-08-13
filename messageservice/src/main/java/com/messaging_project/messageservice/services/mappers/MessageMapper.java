@@ -10,6 +10,5 @@ public interface MessageMapper {
     MessageMapper INSTANCE = Mappers.getMapper(MessageMapper.class);
 
     Message toEntity(MessageRequest messageRequest);
-
     MessageResponse toDTO(Message message);
 }
