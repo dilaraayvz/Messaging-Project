@@ -1,39 +1,27 @@
-package com.messaging_app.authserver.core.configuration;
+package com.messaging_project.messageservice.core.configuration;
 
-
+import com.messaging.security.BaseJwtFilter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.AuthenticationProvider;
-import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.SecurityFilterChain;
-import com.messaging.security.BaseJwtFilter;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 @Configuration
 @RequiredArgsConstructor
-@ComponentScan()
 public class SecurityConfiguration {
     private final BaseJwtFilter baseJwtFilter;
-
-    private final UserDetailsService userDetailsService;
-    private static final String[] WHITE_LIST={
-            "/api/v1/auth/**",
+    private static final String[] WHITE_LIST = {
             "/swagger-ui/**",
             "/v2/api-docs",
             "/v3/api-docs",
             "/v3/api-docs/**",
     };
-    @Bean
-    public PasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder();
-    }
+
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
@@ -43,16 +31,13 @@ public class SecurityConfiguration {
                                 .requestMatchers(WHITE_LIST).permitAll() // WHITE_LIST içinde tanımlanan yollar için izin veriliyor
                                 .anyRequest().authenticated() // Diğer tüm istekler için kimlik doğrulaması gerektir
                 )
+                .sessionManagement(sessionManagementConfigurer ->
+                        sessionManagementConfigurer.sessionCreationPolicy(SessionCreationPolicy.STATELESS) // Oturum yaratma politikasını STATELESS yapar
+                )
+                .addFilterBefore(baseJwtFilter, UsernamePasswordAuthenticationFilter.class) // JwtFilter'ı SecurityFilterChain'e ekler
                 .httpBasic(httpBasicConfigurer -> httpBasicConfigurer.disable()); // HTTP Basic Authentication'ı devre dışı bırakır
 
         return http.build();
-    }
-    @Bean
-    public AuthenticationProvider authenticationProvider(){
-        DaoAuthenticationProvider daoAuthenticationProvider = new DaoAuthenticationProvider();
-        daoAuthenticationProvider.setPasswordEncoder(passwordEncoder());
-        daoAuthenticationProvider.setUserDetailsService(userDetailsService);
-        return daoAuthenticationProvider;
     }
 
     @Bean

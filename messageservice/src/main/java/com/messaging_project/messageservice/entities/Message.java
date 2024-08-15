@@ -27,4 +27,13 @@ public class Message {
 
     @Column(nullable = false)
     private LocalDateTime sentAt;
+
+    @Enumerated(EnumType.STRING)
+    private MessageType messageType;
+
+    public enum MessageType {
+        CHAT,
+        JOIN,
+        LEAVE
+    }
 }
