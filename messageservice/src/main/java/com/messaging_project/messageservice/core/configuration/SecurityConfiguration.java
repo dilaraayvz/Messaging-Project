@@ -18,6 +18,7 @@ public class SecurityConfiguration {
             "/swagger-ui/**",
             "/v2/api-docs",
             "/v3/api-docs",
+            "/ws/**",
             "/v3/api-docs/**",
     };
 

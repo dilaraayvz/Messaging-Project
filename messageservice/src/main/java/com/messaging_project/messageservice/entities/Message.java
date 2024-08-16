@@ -19,6 +19,9 @@ public class Message {
     @Column(nullable = false)
     private int senderId;
 
+    @Column(nullable = false)
+    private String chatId;
+
     @JoinColumn(name = "receiver_id", nullable = false)
     private int receiverId;
 
@@ -28,12 +31,4 @@ public class Message {
     @Column(nullable = false)
     private LocalDateTime sentAt;
 
-    @Enumerated(EnumType.STRING)
-    private MessageType messageType;
-
-    public enum MessageType {
-        CHAT,
-        JOIN,
-        LEAVE
-    }
 }

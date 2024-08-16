@@ -1,6 +1,5 @@
 package com.messaging_project.messageservice.services.abstracts;
 
-import com.messaging_project.messageservice.entities.Message;
 import com.messaging_project.messageservice.services.dtos.requests.MessageRequest;
 import com.messaging_project.messageservice.services.dtos.responses.MessageResponse;
 
@@ -14,4 +13,5 @@ public interface MessageService {
     List<MessageResponse> getReceivedMessages(int receiverId);
 
     Optional<MessageResponse> getMessageById(int id);
+    Optional<MessageResponse> save(MessageRequest messageRequest);
 }

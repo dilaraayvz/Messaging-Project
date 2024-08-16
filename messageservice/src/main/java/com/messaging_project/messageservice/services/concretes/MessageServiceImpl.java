@@ -8,8 +8,8 @@ import com.messaging_project.messageservice.services.abstracts.MessageService;
 import com.messaging_project.messageservice.services.dtos.requests.MessageRequest;
 import com.messaging_project.messageservice.services.dtos.responses.MessageResponse;
 import com.messaging_project.messageservice.services.mappers.MessageMapper;
+import com.messaging_project.messageservice.websocket.chatroom.ChatRoomService;
 import lombok.AllArgsConstructor;
-import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -22,6 +22,7 @@ public class MessageServiceImpl implements MessageService {
     private final AuthServiceClient authServiceClient;
     private final MessageRepository messageRepository;
     private final MessageMapper messageMapper;
+    private final ChatRoomService chatRoomService;
 
     @Override
     public MessageResponse sendMessage(MessageRequest messageRequest) {
@@ -66,5 +67,14 @@ public class MessageServiceImpl implements MessageService {
     public Optional<MessageResponse> getMessageById(int id) {
         return messageRepository.findById(id)
                 .map(message -> messageMapper.toDTO(message));
+    }
+
+    @Override
+    public Optional<MessageResponse> save(MessageRequest messageRequest) {
+        var chatId=chatRoomService.getChatRoomId(messageRequest.getSenderId(),messageRequest.getReceiverId(),true).orElseThrow();
+        Message message = MessageMapper.INSTANCE.toEntity(messageRequest);
+        messageRepository.save(message);
+        MessageResponse messageResponse=MessageMapper.INSTANCE.toDTO(message);
+        return Optional.ofNullable(MessageMapper.INSTANCE.toDTO(message));
     }
 }
